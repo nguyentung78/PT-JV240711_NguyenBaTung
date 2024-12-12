@@ -20,36 +20,36 @@ public class StudentRepositoryImp implements StudentRepository {
     }
 
     @Override
-    public Student findById(int studentId) {
-        return entityManager.find(Student.class, studentId);
+    public Student findById(int id) {
+        return entityManager.find(Student.class, id);
     }
 
-    @Override
     @Transactional
+    @Override
     public boolean save(Student student) {
         try {
             entityManager.persist(student);
             return true;
-        } catch (Exception ex) {
-            throw new RuntimeException("Error persisting student: " + ex.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return false;
     }
 
-
-    @Override
     @Transactional
+    @Override
     public boolean update(Student student) {
         try {
             entityManager.merge(student);
             return true;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return false;
     }
 
-    @Override
     @Transactional
+    @Override
     public boolean delete(int studentId) {
         try {
             Student student = findById(studentId);
@@ -57,17 +57,36 @@ public class StudentRepositoryImp implements StudentRepository {
                 entityManager.remove(student);
                 return true;
             }
-            return false;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return false;
     }
 
     @Override
-    public List<Student> findByClassId(int classId) {
-        return entityManager.createQuery("from Student where studentClass.classId = :classId", Student.class)
-                .setParameter("classId", classId)
-                .getResultList();
+    public boolean existsByStudentName(String studentName) {
+        String query = "SELECT COUNT(s) FROM Student s WHERE s.studentName = :studentName";
+        Long count = entityManager.createQuery(query, Long.class)
+                .setParameter("studentName", studentName)
+                .getSingleResult();
+        return count > 0;
+    }
+
+    @Override
+    public boolean existsByPhoneNumber(String phoneNumber) {
+        String query = "SELECT COUNT(s) FROM Student s WHERE s.phoneNumber = :phoneNumber";
+        Long count = entityManager.createQuery(query, Long.class)
+                .setParameter("phoneNumber", phoneNumber)
+                .getSingleResult();
+        return count > 0;
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        String query = "SELECT COUNT(s) FROM Student s WHERE s.email = :email";
+        Long count = entityManager.createQuery(query, Long.class)
+                .setParameter("email", email)
+                .getSingleResult();
+        return count > 0;
     }
 }

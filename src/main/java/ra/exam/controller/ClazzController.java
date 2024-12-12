@@ -79,11 +79,12 @@ public class ClazzController {
     @GetMapping("/delete")
     public String deleteClazz(@RequestParam("classId") int classId, Model model) {
         try {
-            clazzService.delete(classId);
-        } catch (RuntimeException e) {
-            model.addAttribute("error", e.getMessage());
-            return "clazzes"; // Return to the list of classes
+            clazzService.deleteClazz(classId);
+        } catch (IllegalStateException e) {
+            // Add error message as a query parameter
+            return "redirect:/clazzController/findAll?error=The class has students and cannot be deleted";
         }
         return "redirect:/clazzController/findAll";
     }
+
 }

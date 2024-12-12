@@ -1,6 +1,6 @@
 package ra.exam.service;
 
-import ra.exam.dto.request.StudentRequestDto;
+import org.springframework.web.multipart.MultipartFile;
 import ra.exam.model.Student;
 
 import java.io.IOException;
@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface StudentService {
     List<Student> findAll();
-    Student findById(int studentId);
-    boolean save(StudentRequestDto studentDto) throws IOException;
-    boolean update(StudentRequestDto studentDto) throws IOException;
+    Student findById(int id);
+    boolean save(Student student, MultipartFile avatarFile) throws IOException;
+    boolean update(Student student, MultipartFile avatarFile) throws IOException;
     boolean delete(int studentId);
-    List<Student> findByClassId(int classId);
+    boolean updateWithoutAvatar(Student student);
 }

@@ -18,9 +18,9 @@
     <h1 class="text-center">Class List</h1>
 
     <!-- Display error message if any -->
-    <c:if test="${not empty error}">
+    <c:if test="${param.error != null}">
         <div class="alert alert-danger">
-                ${error}
+                ${param.error}
         </div>
     </c:if>
 

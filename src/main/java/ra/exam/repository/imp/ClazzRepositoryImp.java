@@ -50,6 +50,14 @@ public class ClazzRepositoryImp implements ClazzRepository {
     }
 
     @Override
+    public long countStudentsByClassId(int clazzId) {
+        String query = "SELECT COUNT(s) FROM Student s WHERE s.clazz.classId = :classId";
+        return (long) entityManager.createQuery(query)
+                .setParameter("classId", clazzId)
+                .getSingleResult();
+    }
+
+    @Override
     @Transactional
     public boolean delete(int clazzId) {
         try {

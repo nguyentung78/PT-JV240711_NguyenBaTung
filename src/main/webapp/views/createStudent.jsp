@@ -2,7 +2,7 @@
   Created by IntelliJ IDEA.
   User: admin
   Date: 12/12/2024
-  Time: 9:08 PM
+  Time: 9:42 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
@@ -17,25 +17,25 @@
 <body>
 <div class="container mt-5">
     <h2 class="text-center">Create New Student</h2>
-    <form:form method="post" action="${pageContext.request.contextPath}/studentController/create" modelAttribute="student" enctype="multipart/form-data">
+    <form:form method="post" action="${pageContext.request.contextPath}/studentsController/create" modelAttribute="student" enctype="multipart/form-data">
         <div class="mb-3">
             <form:label path="studentName" class="form-label">Name</form:label>
-            <form:input path="studentName" class="form-control" />
+            <form:input path="studentName" type="text" class="form-control" />
             <form:errors path="studentName" cssClass="text-danger" />
         </div>
         <div class="mb-3">
             <form:label path="phoneNumber" class="form-label">Phone</form:label>
-            <form:input path="phoneNumber" class="form-control" />
+            <form:input path="phoneNumber" type="text" class="form-control" />
             <form:errors path="phoneNumber" cssClass="text-danger" />
         </div>
         <div class="mb-3">
             <form:label path="email" class="form-label">Email</form:label>
-            <form:input path="email" class="form-control" />
+            <form:input path="email" type="email" class="form-control" />
             <form:errors path="email" cssClass="text-danger" />
         </div>
         <div class="mb-3">
             <form:label path="address" class="form-label">Address</form:label>
-            <form:input path="address" class="form-control" />
+            <form:input path="address" type="text" class="form-control" />
             <form:errors path="address" cssClass="text-danger" />
         </div>
         <div class="mb-3">
@@ -46,17 +46,18 @@
             </form:select>
         </div>
         <div class="mb-3">
-            <form:label path="classId" class="form-label">Class</form:label>
-            <form:select path="classId" class="form-control">
-                <c:forEach items="${classes}" var="clazz">
-                    <option value="${clazz.classId}">${clazz.className}</option>
+            <form:label path="clazz.classId" class="form-label">Class</form:label>
+            <form:select path="clazz.classId" class="form-control">
+                <option value="" disabled selected>Select Class</option>
+                <c:forEach items="${listClasses}" var="clazz">
+                    <option value="${clazz.classId}" ${student.clazz.classId == clazz.classId ? 'selected' : ''}>${clazz.className}</option>
                 </c:forEach>
             </form:select>
-            <form:errors path="classId" cssClass="text-danger" />
+            <form:errors path="clazz.classId" cssClass="text-danger" />
         </div>
         <div class="mb-3">
-            <form:label path="image" class="form-label">Image</form:label>
-            <form:input path="image" type="file" class="form-control" />
+            <label for="avatarFile" class="form-label">Avatar</label>
+            <input type="file" id="avatarFile" name="avatarFile" class="form-control" />
         </div>
         <div class="mb-3">
             <form:label path="status" class="form-label">Status</form:label>
@@ -67,9 +68,10 @@
         </div>
         <div class="text-center">
             <button type="submit" class="btn btn-primary">Create</button>
-            <a href="${pageContext.request.contextPath}/studentController/findAll" class="btn btn-secondary">Cancel</a>
+            <a href="${pageContext.request.contextPath}/studentsController/findAll" class="btn btn-secondary">Cancel</a>
         </div>
     </form:form>
 </div>
 </body>
 </html>
+

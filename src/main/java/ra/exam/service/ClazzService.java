@@ -10,4 +10,5 @@ public interface ClazzService {
     boolean save(Clazz clazz);
     boolean update(Clazz clazz);
     boolean delete(int clazzId);
+    void deleteClazz(int clazzId);
 }

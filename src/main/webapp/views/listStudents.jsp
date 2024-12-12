@@ -1,23 +1,16 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: admin
-  Date: 12/12/2024
-  Time: 9:08 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Student List</title>
+    <title>List of Students</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container mt-5">
-    <h1 class="text-center">Student List</h1>
+    <h2 class="text-center">List of Students</h2>
     <div class="mb-3">
-        <a href="${pageContext.request.contextPath}/studentController/initCreate" class="btn btn-success">Add New Student</a>
+        <a href="${pageContext.request.contextPath}/studentsController/initCreate" class="btn btn-success">Add New Student</a>
     </div>
     <table class="table table-bordered">
         <thead>
@@ -30,6 +23,7 @@
             <th>Gender</th>
             <th>Class</th>
             <th>Status</th>
+            <th>Avatar</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -47,7 +41,7 @@
                         <c:otherwise>Female</c:otherwise>
                     </c:choose>
                 </td>
-                <td>${student.studentClass.className}</td>
+                <td>${student.clazz.className}</td>
                 <td>
                     <c:choose>
                         <c:when test="${student.status == 1}">Active</c:when>
@@ -55,9 +49,16 @@
                     </c:choose>
                 </td>
                 <td>
-                    <a href="${pageContext.request.contextPath}/studentController/initUpdate?studentId=${student.studentId}" class="btn btn-primary btn-sm">Edit</a>
-                    <a href="${pageContext.request.contextPath}/studentController/delete?studentId=${student.studentId}" class="btn btn-danger btn-sm"
-                       onclick="return confirm('Are you sure you want to delete this student?');">Delete</a>
+                    <c:if test="${not empty student.imageUrl}">
+                        <img src="${student.imageUrl}" alt="Avatar" class="img-thumbnail" style="width: 50px; height: 50px;">
+                    </c:if>
+                    <c:if test="${empty student.imageUrl}">
+                        <span>No Image</span>
+                    </c:if>
+                </td>
+                <td>
+                    <a href="${pageContext.request.contextPath}/studentsController/initUpdate?id=${student.studentId}" class="btn btn-primary btn-sm">Edit</a>
+                    <a href="${pageContext.request.contextPath}/studentsController/delete?id=${student.studentId}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this student?');">Delete</a>
                 </td>
             </tr>
         </c:forEach>
@@ -66,4 +67,3 @@
 </div>
 </body>
 </html>
-

@@ -10,6 +10,6 @@
 <br/>
 <ul>
     <li><a href="clazzController/findAll">Quản lý lớp</a></li>
-    <li><a href="studentController/findAll">Quản lý sinh viên</a></li>
+    <li><a href="studentsController/findAll">Quản lý sinh viên</a></li>
 </ul></body>
 </html>

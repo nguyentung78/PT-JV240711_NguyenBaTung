@@ -8,48 +8,51 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
+@Table(name = "students")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "students")
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "student_id")
     private int studentId;
+
+    @Column(name = "student_name", columnDefinition = "varchar(100)", unique = true, nullable = false)
     @NotBlank(message = "Tên sinh viên không được để trống")
-    @Size(max = 100, message = "Tên sinh viên không vượt quá 100 kí tự")
-    @Column(name = "student_name", columnDefinition = "varchar(100)", nullable = false, unique = true)
+    @Size(max = 100, message = "Tên sinh viên không được vượt quá 100 ký tự")
     private String studentName;
+
+    @Column(name = "phone_number", columnDefinition = "varchar(11)", unique = true, nullable = false)
     @NotBlank(message = "Số điện thoại không được để trống")
-    @Size(max = 11, message = "Số điện thoại không được vượt quá 11 ký tự")
-    @Column(name = "phone_number", columnDefinition = "varchar(11)", nullable = false, unique = true)
     private String phoneNumber;
+
+    @Column(name = "email", columnDefinition = "varchar(100)", unique = true, nullable = false)
     @NotBlank(message = "Email không được để trống")
-    @Email(message = "Email phải đúng định dạng")
-    @Column(name = "email", columnDefinition = "varchar(100)", nullable = false, unique = true)
+    @Email(message = "Email không hợp lệ")
+    @Size(max = 100, message = "Email không được vượt quá 100 ký tự")
     private String email;
+
+    @Column(name = "address", columnDefinition = "varchar(150)", nullable = false)
     @NotBlank(message = "Địa chỉ không được để trống")
     @Size(max = 150, message = "Địa chỉ không được vượt quá 150 ký tự")
-    @Column(name = "address", columnDefinition = "varchar(150)", nullable = false, unique = true)
     private String address;
-    @Column(name = "sex", columnDefinition = "bit(1)", nullable = false)
-    private boolean sex;
+
+    @Column(name = "sex", nullable = false)
+    private Boolean sex;
+
     @ManyToOne
-    @JoinColumn(name = "class_id", referencedColumnName = "class_id", nullable = false)
-    @NotNull(message = "Không được để trống lớp học")
-    private Clazz studentClass;
+    @JoinColumn(name = "class_id", nullable = false)
+    private Clazz clazz;
+
     @Column(name = "image_url", columnDefinition = "varchar(255)")
     private String imageUrl;
-    @Column(name = "status", columnDefinition = "tinyint", nullable = false)
-    @Min(value = 0, message = "trạng thái không hợp lệ")
-    @Max(value = 4, message = "trạng thái không hợp lệ")
-    private int status;
+
+    @Column(name = "status", nullable = false)
+    private Integer status;
 }

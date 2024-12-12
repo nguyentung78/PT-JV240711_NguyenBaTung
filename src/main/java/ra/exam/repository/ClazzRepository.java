@@ -10,4 +10,6 @@ public interface ClazzRepository {
     boolean save(Clazz clazz);
     boolean update(Clazz clazz);
     boolean delete(int clazzId);
+    long countStudentsByClassId(int clazzId);
+
 }

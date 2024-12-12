@@ -37,4 +37,15 @@ public class ClazzServiceImp implements ClazzService {
     public boolean delete(int clazzId) {
         return clazzRepository.delete(clazzId);
     }
+    @Override
+    public void deleteClazz(int clazzId) {
+        long studentCount = clazzRepository.countStudentsByClassId(clazzId);
+        if (studentCount > 0) {
+            throw new IllegalStateException("Cannot delete class with assigned students.");
+        }
+        boolean deleted = clazzRepository.delete(clazzId);
+        if (!deleted) {
+            throw new RuntimeException("Failed to delete class.");
+        }
+    }
 }
